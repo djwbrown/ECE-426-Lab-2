@@ -17,7 +17,7 @@ BitMap::BitMap(void) {
     }
     
     /* Reset the bitmap[0][0] address. Mark as used. */
-    bitmap[0] = bitmap[0] & 0xFE;
+    bitmap[0] = bitmap[0] & ~0x01;
 }
 
 bool BitMap::search(int n, unsigned int blocks[]) {
@@ -40,4 +40,38 @@ bool BitMap::search(int n, unsigned int blocks[]) {
         }
     }
     return false;
+}
+
+void BitMap::writeBlocks(int n, unsigned int blocks[]) {
+    
+    int address, bytePosition, bitPosition;
+    
+    /* Loop through n blocks and reset their bits as used: 0 */
+    for (int index = 0; index < n; index++) {
+        address = blocks[index];
+        bytePosition = address / 8;
+        if (address >= 8) {
+            bitPosition = address % 8;
+        } else {
+            bitPosition = address;
+        }
+        bitmap[bytePosition] = bitmap[bytePosition] & (~0x01 << bitPosition);
+    }
+}
+
+void BitMap::deleteBlocks(int n, unsigned int blocks[]) {
+    
+    int address, bytePosition, bitPosition;
+    
+    /* Loop through n blocks and set their bits as free: 1 */
+    for (int index = 0; index < n; index++) {
+        address = blocks[index];
+        bytePosition = address / 8;
+        if (address >= 8) {
+            bitPosition = address % 8;
+        } else {
+            bitPosition = address;
+        }
+        bitmap[bytePosition] = bitmap[bytePosition] | (0x01 << bitPosition);
+    }
 }

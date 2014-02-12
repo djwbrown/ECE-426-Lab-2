@@ -19,7 +19,8 @@ class BitMap {
 public:
     BitMap();
     bool search(int n, unsigned int blocks[]);
-    void freeBlocks(int n, unsigned int blocks[]);
+    void writeBlocks(int n, unsigned int blocks[]);
+    void deleteBlocks(int n, unsigned int blocks[]);
     bool searchConsecutive(int n,
                            unsigned int startAddress,
                            unsigned int blockAddress);
