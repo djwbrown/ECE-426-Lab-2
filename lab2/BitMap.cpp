@@ -8,6 +8,20 @@
 
 #include "BitMap.h"
 
+/* Find byte postion in the bitmap */
+int bytePosition(int address) {
+    return address / 8;
+}
+
+/* Find bit postion in the bitmap */
+int bitPosition(int address) {
+    if (address >= 8) {
+        return address % 8;
+    } else {
+        return address;
+    }
+}
+
 BitMap::BitMap(void) {
     
     /* Initialize the bitmap with random binary values */
@@ -44,34 +58,41 @@ bool BitMap::search(int n, unsigned int blocks[]) {
 
 void BitMap::writeBlocks(int n, unsigned int blocks[]) {
     
-    int address, bytePosition, bitPosition;
-    
     /* Loop through n blocks and reset their bits as used: 0 */
     for (int index = 0; index < n; index++) {
-        address = blocks[index];
-        bytePosition = address / 8;
-        if (address >= 8) {
-            bitPosition = address % 8;
-        } else {
-            bitPosition = address;
-        }
-        bitmap[bytePosition] = bitmap[bytePosition] & (~0x01 << bitPosition);
+        int address = blocks[index];
+        bitmap[bytePosition(address)] = bitmap[bytePosition(address)] & (~0x01 << bitPosition(address));
     }
 }
 
 void BitMap::deleteBlocks(int n, unsigned int blocks[]) {
     
-    int address, bytePosition, bitPosition;
-    
     /* Loop through n blocks and set their bits as free: 1 */
     for (int index = 0; index < n; index++) {
-        address = blocks[index];
-        bytePosition = address / 8;
-        if (address >= 8) {
-            bitPosition = address % 8;
-        } else {
-            bitPosition = address;
-        }
-        bitmap[bytePosition] = bitmap[bytePosition] | (0x01 << bitPosition);
+        int address = blocks[index];
+        bitmap[bytePosition(address)] = bitmap[bytePosition(address)] | (0x01 << bitPosition(address));
     }
+}
+
+bool BitMap::searchConsecutive(int n, unsigned int startAddress, unsigned int *blockAddress) {
+    
+    bool spaceFound = false;
+    int address = startAddress;
+    int consecutiveBlocks = 0;
+    
+    while (!spaceFound) {
+        for(int k = 0; consecutiveBlocks <= n; consecutiveBlocks++) {
+            bool blockIsFree = bitmap[bytePosition(address)] & (0x01 << bitPosition(address));
+            if (blockIsFree) {
+                blockAddress[k++] = address;
+            } else {
+                consecutiveBlocks = 0;
+                k = 0;
+            }
+            address++;                    // Increment the address
+            if (address >= N * 8) break;  // Break at end of bitmap
+        }
+        if (consecutiveBlocks > n) spaceFound = true;
+    }
+    return spaceFound;
 }

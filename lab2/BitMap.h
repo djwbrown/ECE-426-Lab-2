@@ -23,7 +23,7 @@ public:
     void deleteBlocks(int n, unsigned int blocks[]);
     bool searchConsecutive(int n,
                            unsigned int startAddress,
-                           unsigned int blockAddress);
+                           unsigned int *blockAddress);
 private:
     unsigned char bitmap[N];
 };
