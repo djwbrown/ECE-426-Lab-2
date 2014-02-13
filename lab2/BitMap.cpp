@@ -30,7 +30,7 @@ BitMap::BitMap(void) {
         bitmap[i] = rand()%256;
     }
     
-    /* Reset the bitmap[0][0] address. Mark as used. */
+    /* Reset the bitmap[0][0] address. Mark as used: 0 */
     bitmap[0] = bitmap[0] & ~0x01;
 }
 
