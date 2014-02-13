@@ -67,6 +67,16 @@ int main(int argc, const char * argv[])
     
     /* Test FreeList */
     FreeList freelist = FreeList();
+    unsigned int listBlocks[numBlocks];
+    if (freelist.writeBlocks(numBlocks, listBlocks)) {
+        std::cout << "List of " << numBlocks << " list blocks: ";
+        for (int i = 0; i < numBlocks; i++) {
+            std::cout << listBlocks[i] << " ";
+        }
+        std::cout << "\n";
+    } else {
+        std::cout << "Insufficient disk space available!\n";
+    }
     
     return 0;
 }

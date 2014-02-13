@@ -23,7 +23,8 @@ public:
 private:
     struct node {
         unsigned int address;
-        struct node *next;
+        struct node *previous = nullptr;
+        struct node *next = nullptr;
     };
     struct node *front = nullptr;
     struct node *end = nullptr;
