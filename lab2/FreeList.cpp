@@ -11,10 +11,19 @@
 FreeList::FreeList(void) {
     const unsigned int start_address = 1;
     
-    /* Initialize the FreeList */
-    struct node this_node = {start_address, nullptr};
-    for (unsigned int addr = start_address; addr < NUM_BLOCKS; ++addr) {
-        struct node next_node = {addr, nullptr};
-        this_node.next = &next_node;
+    /* Initialize the FreeList head pointer 'front' */
+    node *this_node = new node;
+    front = this_node;
+    this_node->address = start_address;
+    
+    /* Create a linked list with NUM_BLOCKS elements */
+    for (unsigned int addr = start_address + 1; addr < NUM_BLOCKS; addr++) {
+        node *next_node_ptr = new node;
+        this_node->next = next_node_ptr;
+        this_node = this_node->next;
+        this_node->address = addr;
     }
+    
+    /* Keep track of 'end', a pointer to the end of the list */
+    end = this_node;
 }

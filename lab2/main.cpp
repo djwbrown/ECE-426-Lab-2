@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "BitMap.h"
+#include "FreeList.h"
 
 int main(int argc, const char * argv[])
 {
@@ -63,6 +64,9 @@ int main(int argc, const char * argv[])
     } else {
         std::cout << "Insufficient disk space available!\n";
     }
+    
+    /* Test FreeList */
+    FreeList freelist = FreeList();
     
     return 0;
 }

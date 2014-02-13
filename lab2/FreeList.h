@@ -22,8 +22,8 @@ public:
     bool deleteBlocks(unsigned int n, unsigned int blocks[]);
 private:
     struct node {
-        unsigned int address = 0;
-        struct node *next = nullptr;
+        unsigned int address;
+        struct node *next;
     };
     struct node *front = nullptr;
     struct node *end = nullptr;
