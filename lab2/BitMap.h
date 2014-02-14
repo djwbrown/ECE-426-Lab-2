@@ -16,6 +16,7 @@
 #define N 1024
 
 class BitMap {
+    
 public:
     BitMap();
     bool search(int n, unsigned int blocks[]);
@@ -24,6 +25,7 @@ public:
     bool searchConsecutive(int n,
                            unsigned int startAddress,
                            unsigned int *blockAddress);
+    
 private:
     unsigned char bitmap[N];
 };
