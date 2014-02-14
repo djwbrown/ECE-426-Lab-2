@@ -16,10 +16,12 @@
 #define NUM_BLOCKS 256
 
 class FreeList {
+    
 public:
     FreeList();
     bool writeBlocks(unsigned int n, unsigned int blocks[]);
     void deleteBlocks(unsigned int n, unsigned int blocks[]);
+    
 private:
     struct node {
         unsigned int address;

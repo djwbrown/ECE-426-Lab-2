@@ -9,6 +9,11 @@
 #include "FreeList.h"
 
 FreeList::FreeList(void) {
+    
+    /* Purpose: Default constructor for FreeList. Creates a doubly-linked list with NUM_BLOCKS nodes.
+     * Inputs:  void
+     */
+    
     const unsigned int start_address = 1;
     
     /* Initialize the FreeList head pointer 'front' */
@@ -36,6 +41,13 @@ FreeList::FreeList(void) {
 }
 
 bool FreeList::writeBlocks(unsigned int n, unsigned int blocks[]) {
+    
+    /* Purpose: Finds the first n available blocks in the FreeList, starting at front.
+     * Inputs:  unsigned int n          size of blocks array
+                unsigned int blocks[]   array of block addresses
+     * Outputs: bool                    returns true if enough write was successful
+     */
+    
     unsigned int blocksRemaining = n;
     node *this_node = front;
     
@@ -68,6 +80,12 @@ bool FreeList::writeBlocks(unsigned int n, unsigned int blocks[]) {
 }
 
 void FreeList::deleteBlocks(unsigned int n, unsigned int blocks[]) {
+    
+    /* Purpose: Takes the addresses contained in the blocks array appends them to the FreeList.
+     * Inputs:  unsigned int n          size of blocks array
+                unsigned int blocks[]   array of block addresses
+     * Outputs: void
+     */
     
     /* Start at the end of the freelist and loop n times */
     node *this_node = end;
