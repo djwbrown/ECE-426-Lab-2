@@ -16,7 +16,7 @@ int main(int argc, const char * argv[])
     /* Create a BitMap object and blocks array */
     BitMap map = BitMap();
     const int numBlocks = 10;
-    unsigned int blocks[numBlocks];
+    unsigned int blocks[numBlocks] = {0};
     
     /* Output the blocks array, or error if search failed */
     if (map.search(numBlocks, blocks)) {
@@ -68,6 +68,8 @@ int main(int argc, const char * argv[])
     /* Test FreeList */
     FreeList freelist = FreeList();
     unsigned int listBlocks[numBlocks];
+    freelist.writeBlocks(numBlocks, listBlocks);
+    freelist.deleteBlocks(numBlocks, listBlocks);
     if (freelist.writeBlocks(numBlocks, listBlocks)) {
         std::cout << "List of " << numBlocks << " list blocks: ";
         for (int i = 0; i < numBlocks; i++) {

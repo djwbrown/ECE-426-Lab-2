@@ -50,16 +50,38 @@ bool FreeList::writeBlocks(unsigned int n, unsigned int blocks[]) {
             /* Handle re-linking and moving the head pointer 'front' */
             if (this_node != front) {
                 this_node->previous->next = this_node->next;
+                this_node->next->previous = this_node->previous;
             }
             else {
                 front = this_node->next;
+                this_node->next->previous = nullptr;
             }
             
-            /* Handle removal of this node from the FreeList */
+            /* Handle removal of this_node from the FreeList */
+            node *delete_me = this_node;
             this_node = this_node->next;
-            delete this_node;
+            delete delete_me;
             blocksRemaining--;
         }
     }
     return true;
+}
+
+void FreeList::deleteBlocks(unsigned int n, unsigned int blocks[]) {
+    
+    /* Start at the end of the freelist and loop n times */
+    node *this_node = end;
+    for (int index = 0; index < n; index++) {
+        
+        /* Create a new node and setup the links */
+        node *next_node_ptr = new node;
+        this_node->next = next_node_ptr;
+        this_node->next->previous = this_node;
+        
+        /* Traverse to the new node; set address and end */
+        this_node = this_node->next;
+        this_node->address = blocks[index];
+        blocks[index] = 0;
+        end = this_node;
+    }
 }
